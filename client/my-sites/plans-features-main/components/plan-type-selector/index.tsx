@@ -8,7 +8,7 @@ import {
 	getPlanSlugForTermVariant,
 	TERM_ANNUALLY,
 } from '@automattic/calypso-products';
-import { Popover } from '@automattic/components';
+import { Popover, SegmentedControl } from '@automattic/components';
 import styled from '@emotion/styled';
 import classNames from 'classnames';
 import { useTranslate } from 'i18n-calypso';
@@ -17,7 +17,6 @@ import { useEffect, useState } from 'react';
 import * as React from 'react';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import { Primitive } from 'utility-types';
-import SegmentedControl from 'calypso/components/segmented-control';
 import { recordTracksEvent } from 'calypso/lib/analytics/tracks';
 import { ProvideExperimentData } from 'calypso/lib/explat';
 import { addQueryArgs } from 'calypso/lib/url';
