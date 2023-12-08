@@ -1,4 +1,5 @@
 /* eslint-disable wpcalypso/jsx-classname-namespace */
+import { PlanPrice } from '@automattic/components';
 import { useLocale } from '@automattic/i18n-utils';
 import { useSelect } from '@wordpress/data';
 import { useCallback, useState } from '@wordpress/element';
@@ -13,7 +14,6 @@ import { ONBOARD_STORE } from 'calypso/landing/stepper/stores';
 import { recordTracksEvent } from 'calypso/lib/analytics/tracks';
 import { domainRegistration } from 'calypso/lib/cart-values/cart-items';
 import { cartManagerClient } from 'calypso/my-sites/checkout/cart-manager-client';
-import PlanPrice from 'calypso/my-sites/plan-price';
 import { SenseiStepContainer } from '../components/sensei-step-container';
 import { SenseiStepError } from '../components/sensei-step-error';
 import { SenseiStepProgress } from '../components/sensei-step-progress';
