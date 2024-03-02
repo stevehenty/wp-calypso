@@ -11,7 +11,7 @@
 # 3. Cross fingers :)
 
 # Check run-gb-core-tests-on-dotcom.sh for more info.
-FROM ci-e2e-gb-core-on-dotcom:latest
+FROM ci-e2e-gb-core-on-dotcom:latest AS ci-e2e-gb-core-on-dotcom-test
 
 WORKDIR /workspace
 
