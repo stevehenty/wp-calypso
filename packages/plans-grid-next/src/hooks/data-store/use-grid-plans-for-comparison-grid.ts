@@ -1,36 +1,14 @@
 import {
-	FeatureList,
 	PLAN_ENTERPRISE_GRID_WPCOM,
 	PLAN_HOSTING_TRIAL_MONTHLY,
-	PlanSlug,
-	TERMS_LIST,
 } from '@automattic/calypso-products';
-import { AddOnMeta } from '@automattic/data-stores';
-import { UseCheckPlanAvailabilityForPurchase } from '@automattic/data-stores/src/plans';
 import { useMemo } from '@wordpress/element';
-import { GridPlan, HiddenPlans, PlansIntent } from '../../types';
-import useGridPlans, { UseFreeTrialPlanSlugs } from './use-grid-plans';
+import { GridPlan } from '../../types';
+import { UseGridPlans } from './types';
+import useGridPlans from './use-grid-plans';
 import useRestructuredPlanFeaturesForComparisonGrid from './use-restructured-plan-features-for-comparison-grid';
 
 const HIDDEN_PLANS = [ PLAN_HOSTING_TRIAL_MONTHLY, PLAN_ENTERPRISE_GRID_WPCOM ];
-
-interface Params {
-	allFeaturesList: FeatureList;
-	coupon?: string;
-	eligibleForFreeHostingTrial?: boolean;
-	hiddenPlans?: HiddenPlans;
-	intent?: PlansIntent;
-	isDisplayingPlansNeededForFeature?: boolean;
-	isSubdomainNotGenerated?: boolean;
-	selectedFeature?: string | null;
-	selectedPlan?: PlanSlug;
-	showLegacyStorageFeature?: boolean;
-	siteId?: number | null;
-	storageAddOns: ( AddOnMeta | null )[];
-	term?: ( typeof TERMS_LIST )[ number ];
-	useCheckPlanAvailabilityForPurchase: UseCheckPlanAvailabilityForPurchase;
-	useFreeTrialPlanSlugs?: UseFreeTrialPlanSlugs;
-}
 
 const useGridPlansForComparisonGrid = ( {
 	allFeaturesList,
@@ -48,7 +26,7 @@ const useGridPlansForComparisonGrid = ( {
 	term,
 	useCheckPlanAvailabilityForPurchase,
 	useFreeTrialPlanSlugs,
-}: Params ): GridPlan[] | null => {
+}: UseGridPlans ): GridPlan[] | null => {
 	const gridPlans = useGridPlans( {
 		allFeaturesList,
 		coupon,
