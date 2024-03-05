@@ -27,7 +27,6 @@ import {
 	isPersonalPlan,
 } from '@automattic/calypso-products';
 import { Plans, type AddOnMeta } from '@automattic/data-stores';
-import { useSite } from '@automattic/data-stores/src/site';
 import { isSamePlan } from '../../lib/is-same-plan';
 import useHighlightLabels from './use-highlight-labels';
 import usePlansFromTypes from './use-plans-from-types';
@@ -126,9 +125,7 @@ const usePlanTypesWithIntent = ( {
 	Props,
 	'intent' | 'selectedPlan' | 'siteId' | 'hiddenPlans' | 'isSubdomainNotGenerated'
 > ): string[] => {
-	const { data: { slug: sitePlanSlug } = {} } = useSite( {
-		siteIdOrSlug: siteId,
-	} );
+	const { planSlug: sitePlanSlug } = Plans.useCurrentPlan( { siteId } ) || {};
 	const isEnterpriseAvailable = ! hideEnterprisePlan;
 	const isBloggerAvailable =
 		( selectedPlan && isBloggerPlan( selectedPlan ) ) ||
@@ -267,13 +264,11 @@ const useGridPlans = ( {
 	} );
 
 	// only fetch highlights for the plans that are available for the intent
-	const { data: { slug: sitePlanSlug } = {} } = useSite( {
-		siteIdOrSlug: siteId,
-	} );
+	const { planSlug: sitePlanSlug } = Plans.useCurrentPlan( { siteId } ) || {};
 	const highlightLabels = useHighlightLabels( {
 		intent,
 		planSlugs: planSlugsForIntent,
-		currentSitePlanSlug: sitePlanSlug as PlanSlug,
+		currentSitePlanSlug: sitePlanSlug,
 		selectedPlan,
 		plansAvailabilityForPurchase,
 	} );
