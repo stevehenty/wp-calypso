@@ -18,7 +18,7 @@ import type { ComparisonGridExternalProps, FeaturesGridExternalProps } from './t
 import './style.scss';
 
 const WrappedComparisonGrid = ( {
-	selectedSiteId,
+	siteId,
 	intent,
 	gridPlans,
 	useCheckPlanAvailabilityForPurchase,
@@ -61,7 +61,7 @@ const WrappedComparisonGrid = ( {
 		<div ref={ gridContainerRef } className={ classNames }>
 			<PlansGridContextProvider
 				intent={ intent }
-				selectedSiteId={ selectedSiteId }
+				siteId={ siteId }
 				gridPlans={ gridPlans }
 				useCheckPlanAvailabilityForPurchase={ useCheckPlanAvailabilityForPurchase }
 				recordTracksEvent={ recordTracksEvent }
@@ -73,7 +73,7 @@ const WrappedComparisonGrid = ( {
 					isInSignup={ isInSignup }
 					isLaunchPage={ isLaunchPage }
 					currentSitePlanSlug={ currentSitePlanSlug }
-					selectedSiteId={ selectedSiteId }
+					siteId={ siteId }
 					selectedPlan={ selectedPlan }
 					selectedFeature={ selectedFeature }
 					showUpgradeableStorage={ showUpgradeableStorage }
@@ -89,7 +89,7 @@ const WrappedComparisonGrid = ( {
 
 const WrappedFeaturesGrid = ( props: FeaturesGridExternalProps ) => {
 	const {
-		selectedSiteId,
+		siteId,
 		intent,
 		gridPlans,
 		useCheckPlanAvailabilityForPurchase,
@@ -120,7 +120,7 @@ const WrappedFeaturesGrid = ( props: FeaturesGridExternalProps ) => {
 		<div ref={ gridContainerRef } className={ classNames }>
 			<PlansGridContextProvider
 				intent={ intent }
-				selectedSiteId={ selectedSiteId }
+				siteId={ siteId }
 				gridPlans={ gridPlans }
 				coupon={ coupon }
 				useCheckPlanAvailabilityForPurchase={ useCheckPlanAvailabilityForPurchase }

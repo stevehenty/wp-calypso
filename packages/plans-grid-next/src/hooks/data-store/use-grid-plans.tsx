@@ -64,7 +64,7 @@ interface Props {
 	 */
 	isSubdomainNotGenerated?: boolean;
 	coupon?: string;
-	selectedSiteId?: number | null;
+	siteId?: number | null;
 }
 
 const isGridPlanVisible = ( {
@@ -119,15 +119,15 @@ const isGridPlanVisible = ( {
 const usePlanTypesWithIntent = ( {
 	intent,
 	selectedPlan,
-	selectedSiteId,
+	siteId,
 	hiddenPlans: { hideEnterprisePlan } = {},
 	isSubdomainNotGenerated = false,
 }: Pick<
 	Props,
-	'intent' | 'selectedPlan' | 'selectedSiteId' | 'hiddenPlans' | 'isSubdomainNotGenerated'
+	'intent' | 'selectedPlan' | 'siteId' | 'hiddenPlans' | 'isSubdomainNotGenerated'
 > ): string[] => {
 	const { data: { slug: sitePlanSlug } = {} } = useSite( {
-		siteIdOrSlug: selectedSiteId,
+		siteIdOrSlug: siteId,
 	} );
 	const isEnterpriseAvailable = ! hideEnterprisePlan;
 	const isBloggerAvailable =
@@ -233,7 +233,7 @@ const useGridPlans = ( {
 	isSubdomainNotGenerated,
 	storageAddOns,
 	coupon,
-	selectedSiteId,
+	siteId,
 	isDisplayingPlansNeededForFeature,
 }: Props ): Omit< GridPlan, 'features' >[] | null => {
 	const freeTrialPlanSlugs = useFreeTrialPlanSlugs?.( {
@@ -244,7 +244,7 @@ const useGridPlans = ( {
 		planTypes: usePlanTypesWithIntent( {
 			intent: 'default',
 			selectedPlan,
-			selectedSiteId,
+			siteId,
 			hiddenPlans,
 			isSubdomainNotGenerated,
 		} ),
@@ -255,7 +255,7 @@ const useGridPlans = ( {
 		planTypes: usePlanTypesWithIntent( {
 			intent,
 			selectedPlan,
-			selectedSiteId,
+			siteId,
 			hiddenPlans,
 			isSubdomainNotGenerated,
 		} ),
@@ -268,7 +268,7 @@ const useGridPlans = ( {
 
 	// only fetch highlights for the plans that are available for the intent
 	const { data: { slug: sitePlanSlug } = {} } = useSite( {
-		siteIdOrSlug: selectedSiteId,
+		siteIdOrSlug: siteId,
 	} );
 	const highlightLabels = useHighlightLabels( {
 		intent,
@@ -284,7 +284,7 @@ const useGridPlans = ( {
 		planSlugs: availablePlanSlugs,
 		storageAddOns,
 		coupon,
-		selectedSiteId,
+		siteId,
 		useCheckPlanAvailabilityForPurchase,
 	} );
 

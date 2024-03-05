@@ -53,7 +53,7 @@ const useGridPlansForFeaturesGrid = ( {
 		isSubdomainNotGenerated,
 		selectedFeature,
 		selectedPlan,
-		selectedSiteId: siteId,
+		siteId,
 		showLegacyStorageFeature,
 		storageAddOns,
 		term,
