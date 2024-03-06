@@ -456,6 +456,13 @@ import {
 	PLAN_BLUEHOST_CLOUD_2Y,
 	PLAN_BLUEHOST_CLOUD_MONTHLY,
 	PLAN_BLUEHOST_CLOUD_3Y,
+	WPCOM_FEATURES_PREMIUM_THEMES_LIMITED,
+	EXPERT_SUPPORT_ALL_DAYS,
+	FEATURE_REAL_TIME_SECURITY_SCANS,
+	FEATURE_TIERED_STORAGE_PLANS_AVAILABLE,
+	FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING,
+	FEATURE_SECURITY_VULNERABILITY_NOTIFICATIONS,
+	FEATURE_WOOCOMMERCE_HOSTING,
 } from './constants';
 import type {
 	BillingTerm,
@@ -861,6 +868,7 @@ const getPlanPersonalDetails = (): IncompleteWPcomPlan => ( {
 	],
 	get2023PricingGridSignupWpcomFeatures: () => [
 		FEATURE_CUSTOM_DOMAIN,
+		WPCOM_FEATURES_PREMIUM_THEMES_LIMITED,
 		FEATURE_AD_FREE_EXPERIENCE,
 		FEATURE_FAST_DNS,
 		FEATURE_SUPPORT_EMAIL,
@@ -977,7 +985,7 @@ const getPlanEcommerceDetails = (): IncompleteWPcomPlan => ( {
 	getPortfolioAudience: () => i18n.translate( 'Best for online stores' ),
 	getStoreAudience: () => i18n.translate( 'Best for online stores' ),
 	getPlanTagline: () =>
-		i18n.translate( 'Create a powerful online store with built-in premium extensions.' ),
+		i18n.translate( 'Build an online store with powerful, integrated premium extensions.' ),
 	getDescription: () => {
 		return i18n.translate(
 			'{{strong}}Best for online stores:{{/strong}} Sell products or services with this powerful, ' +
@@ -1071,6 +1079,7 @@ const getPlanEcommerceDetails = (): IncompleteWPcomPlan => ( {
 		].filter( isValueTruthy ),
 	get2023PricingGridSignupWpcomFeatures: () => [
 		FEATURE_CUSTOM_DOMAIN,
+		FEATURE_WOOCOMMERCE_HOSTING,
 		FEATURE_PREMIUM_STORE_THEMES,
 		FEATURE_STORE_DESIGN,
 		FEATURE_UNLIMITED_PRODUCTS,
@@ -1497,7 +1506,7 @@ const getPlanPremiumDetails = (): IncompleteWPcomPlan => ( {
 		].filter( isValueTruthy ),
 	get2023PricingGridSignupWpcomFeatures: () => [
 		FEATURE_CUSTOM_DOMAIN,
-		FEATURE_LIVE_CHAT_SUPPORT,
+		EXPERT_SUPPORT_ALL_DAYS,
 		WPCOM_FEATURES_PREMIUM_THEMES_UNLIMITED,
 		FEATURE_WORDADS,
 		FEATURE_STYLE_CUSTOMIZATION,
@@ -1595,7 +1604,9 @@ const getPlanBusinessDetails = (): IncompleteWPcomPlan => ( {
 	getPortfolioAudience: () => i18n.translate( 'Best for small businesses' ),
 	getStoreAudience: () => i18n.translate( 'The plan for small businesses' ),
 	getPlanTagline: () =>
-		i18n.translate( 'Unlock the power of WordPress with plugins and cloud tools.' ),
+		i18n.translate(
+			'Unlock the power of WordPress with the managed hosting platform built by WordPress experts.'
+		),
 	getBlogOnboardingTagLine: () =>
 		i18n.translate( 'Expand your blog with plugins and powerful tools to help you scale.' ),
 	getDescription: () =>
@@ -1690,6 +1701,8 @@ const getPlanBusinessDetails = (): IncompleteWPcomPlan => ( {
 		FEATURE_CUSTOM_DOMAIN,
 		FEATURE_PLUGINS_THEMES,
 		FEATURE_BANDWIDTH,
+		FEATURE_LIVE_CHAT_SUPPORT,
+		FEATURE_UNLIMITED_TRAFFIC,
 		FEATURE_GLOBAL_EDGE_CACHING,
 		FEATURE_BURST,
 		FEATURE_WAF_V2,
@@ -1698,11 +1711,19 @@ const getPlanBusinessDetails = (): IncompleteWPcomPlan => ( {
 		FEATURE_DATACENTRE_FAILOVER,
 		FEATURE_ISOLATED_INFRA,
 		FEATURE_SECURITY_MALWARE,
+		FEATURE_TIERED_STORAGE_PLANS_AVAILABLE,
+		FEATURE_REAL_TIME_SECURITY_SCANS,
+		/***
+		 * Probably should be moved to Jetpack Features
+		 */
+		FEATURE_SPAM_JP,
 		FEATURE_SECURITY_DDOS,
 		FEATURE_DEV_TOOLS,
 		FEATURE_SITE_STAGING_SITES,
+		FEATURE_SEAMLESS_STAGING_PRODUCTION_SYNCING,
 		FEATURE_WP_UPDATES,
 		FEATURE_MULTI_SITE,
+		FEATURE_SECURITY_VULNERABILITY_NOTIFICATIONS,
 		FEATURE_PAYMENT_TRANSACTION_FEES_2_REGULAR,
 		FEATURE_PAYMENT_TRANSACTION_FEES_0_WOO,
 	],
