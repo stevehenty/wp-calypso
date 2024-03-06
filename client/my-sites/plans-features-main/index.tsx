@@ -765,11 +765,9 @@ const PlansFeaturesMain = ( {
 						onUpgradeClick?.( cartItems );
 					} }
 				/>
-				{ siteId && (
+				{ siteId && gridPlansForFeaturesGrid && (
 					<PlanNotice
-						visiblePlans={
-							gridPlansForFeaturesGrid?.map( ( gridPlan ) => gridPlan.planSlug ) || []
-						}
+						visiblePlans={ gridPlansForFeaturesGrid.map( ( gridPlan ) => gridPlan.planSlug ) }
 						siteId={ siteId }
 						isInSignup={ isInSignup }
 						{ ...( withDiscount &&
@@ -818,34 +816,36 @@ const PlansFeaturesMain = ( {
 							data-e2e-plans="wpcom"
 						>
 							<div className="plans-wrapper">
-								<FeaturesGrid
-									gridPlans={ gridPlansForFeaturesGrid || [] }
-									gridPlanForSpotlight={ gridPlanForSpotlight }
-									paidDomainName={ paidDomainName }
-									generatedWPComSubdomain={ resolvedSubdomainName }
-									isCustomDomainAllowedOnFreePlan={ isCustomDomainAllowedOnFreePlan }
-									isInSignup={ isInSignup }
-									isInAdmin={ ! isInSignup }
-									isLaunchPage={ isLaunchPage }
-									onUpgradeClick={ handleUpgradeClick }
-									selectedFeature={ selectedFeature }
-									siteId={ siteId }
-									intervalType={ intervalType }
-									hideUnavailableFeatures={ hideUnavailableFeatures }
-									currentSitePlanSlug={ sitePlanSlug }
-									planActionOverrides={ planActionOverrides }
-									intent={ intent }
-									showLegacyStorageFeature={ showLegacyStorageFeature }
-									showUpgradeableStorage={ showUpgradeableStorage }
-									stickyRowOffset={ masterbarHeight }
-									useCheckPlanAvailabilityForPurchase={ useCheckPlanAvailabilityForPurchase }
-									allFeaturesList={ FEATURES_LIST }
-									onStorageAddOnClick={ handleStorageAddOnClick }
-									showRefundPeriod={ isAnyHostingFlow( flowName ) }
-									recordTracksEvent={ recordTracksEvent }
-									coupon={ coupon }
-									planUpgradeCreditsApplicable={ planUpgradeCreditsApplicable }
-								/>
+								{ gridPlansForFeaturesGrid && (
+									<FeaturesGrid
+										gridPlans={ gridPlansForFeaturesGrid }
+										gridPlanForSpotlight={ gridPlanForSpotlight }
+										paidDomainName={ paidDomainName }
+										generatedWPComSubdomain={ resolvedSubdomainName }
+										isCustomDomainAllowedOnFreePlan={ isCustomDomainAllowedOnFreePlan }
+										isInSignup={ isInSignup }
+										isInAdmin={ ! isInSignup }
+										isLaunchPage={ isLaunchPage }
+										onUpgradeClick={ handleUpgradeClick }
+										selectedFeature={ selectedFeature }
+										siteId={ siteId }
+										intervalType={ intervalType }
+										hideUnavailableFeatures={ hideUnavailableFeatures }
+										currentSitePlanSlug={ sitePlanSlug }
+										planActionOverrides={ planActionOverrides }
+										intent={ intent }
+										showLegacyStorageFeature={ showLegacyStorageFeature }
+										showUpgradeableStorage={ showUpgradeableStorage }
+										stickyRowOffset={ masterbarHeight }
+										useCheckPlanAvailabilityForPurchase={ useCheckPlanAvailabilityForPurchase }
+										allFeaturesList={ FEATURES_LIST }
+										onStorageAddOnClick={ handleStorageAddOnClick }
+										showRefundPeriod={ isAnyHostingFlow( flowName ) }
+										recordTracksEvent={ recordTracksEvent }
+										coupon={ coupon }
+										planUpgradeCreditsApplicable={ planUpgradeCreditsApplicable }
+									/>
+								) }
 								{ showEscapeHatch && hidePlansFeatureComparison && (
 									<div className="plans-features-main__escape-hatch">
 										<Button borderless onClick={ () => setForceDefaultPlans( true ) }>
@@ -884,33 +884,37 @@ const PlansFeaturesMain = ( {
 													coupon={ coupon }
 												/>
 											) }
-											<ComparisonGrid
-												gridPlans={ gridPlansForComparisonGrid || [] }
-												isInSignup={ isInSignup }
-												isInAdmin={ ! isInSignup }
-												isLaunchPage={ isLaunchPage }
-												onUpgradeClick={ handleUpgradeClick }
-												selectedFeature={ selectedFeature }
-												selectedPlan={ selectedPlan }
-												siteId={ siteId }
-												intervalType={ intervalType }
-												hideUnavailableFeatures={ hideUnavailableFeatures }
-												currentSitePlanSlug={ sitePlanSlug }
-												planActionOverrides={ planActionOverrides }
-												intent={ intent }
-												showUpgradeableStorage={ showUpgradeableStorage }
-												stickyRowOffset={ comparisonGridStickyRowOffset }
-												useCheckPlanAvailabilityForPurchase={ useCheckPlanAvailabilityForPurchase }
-												allFeaturesList={ FEATURES_LIST }
-												onStorageAddOnClick={ handleStorageAddOnClick }
-												showRefundPeriod={ isAnyHostingFlow( flowName ) }
-												planTypeSelectorProps={
-													! hidePlanSelector ? planTypeSelectorProps : undefined
-												}
-												coupon={ coupon }
-												recordTracksEvent={ recordTracksEvent }
-												planUpgradeCreditsApplicable={ planUpgradeCreditsApplicable }
-											/>
+											{ gridPlansForComparisonGrid && (
+												<ComparisonGrid
+													gridPlans={ gridPlansForComparisonGrid }
+													isInSignup={ isInSignup }
+													isInAdmin={ ! isInSignup }
+													isLaunchPage={ isLaunchPage }
+													onUpgradeClick={ handleUpgradeClick }
+													selectedFeature={ selectedFeature }
+													selectedPlan={ selectedPlan }
+													siteId={ siteId }
+													intervalType={ intervalType }
+													hideUnavailableFeatures={ hideUnavailableFeatures }
+													currentSitePlanSlug={ sitePlanSlug }
+													planActionOverrides={ planActionOverrides }
+													intent={ intent }
+													showUpgradeableStorage={ showUpgradeableStorage }
+													stickyRowOffset={ comparisonGridStickyRowOffset }
+													useCheckPlanAvailabilityForPurchase={
+														useCheckPlanAvailabilityForPurchase
+													}
+													allFeaturesList={ FEATURES_LIST }
+													onStorageAddOnClick={ handleStorageAddOnClick }
+													showRefundPeriod={ isAnyHostingFlow( flowName ) }
+													planTypeSelectorProps={
+														! hidePlanSelector ? planTypeSelectorProps : undefined
+													}
+													coupon={ coupon }
+													recordTracksEvent={ recordTracksEvent }
+													planUpgradeCreditsApplicable={ planUpgradeCreditsApplicable }
+												/>
+											) }
 											<ComparisonGridToggle
 												onClick={ toggleShowPlansComparisonGrid }
 												label={ translate( 'Hide comparison' ) }
