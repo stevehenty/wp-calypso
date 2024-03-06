@@ -497,7 +497,6 @@ const PlansFeaturesMain = ( {
 			displayedIntervals: filteredDisplayedIntervals,
 			showPlanTypeSelectorDropdown,
 			kind: planTypeSelector,
-			plans: gridPlansForFeaturesGrid?.map( ( gridPlan ) => gridPlan.planSlug ) || [],
 			currentSitePlanSlug: sitePlanSlug,
 			useCheckPlanAvailabilityForPurchase,
 			recordTracksEvent,
@@ -563,6 +562,10 @@ const PlansFeaturesMain = ( {
 		getPlanTypeDestination,
 		onPlanIntervalUpdate,
 	] );
+
+	const gridPlansForPlanTypeSelector = gridPlansForFeaturesGrid?.map(
+		( gridPlan ) => gridPlan.planSlug
+	);
 
 	const isEligibleForTrial = useSelector( isUserEligibleForFreeHostingTrial );
 
@@ -795,9 +798,10 @@ const PlansFeaturesMain = ( {
 				{ ! isPlansGridReady && <Spinner size={ 30 } /> }
 				{ isPlansGridReady && (
 					<>
-						{ ! hidePlanSelector && (
+						{ ! hidePlanSelector && gridPlansForPlanTypeSelector && (
 							<PlanTypeSelector
 								{ ...planTypeSelectorProps }
+								plans={ gridPlansForPlanTypeSelector }
 								layoutClassName="plans-features-main__plan-type-selector-layout"
 								enableStickyBehavior={ enablePlanTypeSelectorStickyBehavior }
 								stickyPlanTypeSelectorOffset={ masterbarHeight - 1 }
@@ -877,14 +881,17 @@ const PlansFeaturesMain = ( {
 											<PlanComparisonHeader className="wp-brand-font">
 												{ translate( 'Compare our plans and find yours' ) }
 											</PlanComparisonHeader>
-											{ ! hidePlanSelector && showPlansComparisonGrid && (
-												<PlanTypeSelector
-													{ ...planTypeSelectorProps }
-													layoutClassName="plans-features-main__plan-type-selector-layout"
-													coupon={ coupon }
-												/>
-											) }
-											{ gridPlansForComparisonGrid && (
+											{ ! hidePlanSelector &&
+												showPlansComparisonGrid &&
+												gridPlansForPlanTypeSelector && (
+													<PlanTypeSelector
+														{ ...planTypeSelectorProps }
+														plans={ gridPlansForPlanTypeSelector }
+														layoutClassName="plans-features-main__plan-type-selector-layout"
+														coupon={ coupon }
+													/>
+												) }
+											{ gridPlansForComparisonGrid && gridPlansForPlanTypeSelector && (
 												<ComparisonGrid
 													gridPlans={ gridPlansForComparisonGrid }
 													isInSignup={ isInSignup }
@@ -908,7 +915,9 @@ const PlansFeaturesMain = ( {
 													onStorageAddOnClick={ handleStorageAddOnClick }
 													showRefundPeriod={ isAnyHostingFlow( flowName ) }
 													planTypeSelectorProps={
-														! hidePlanSelector ? planTypeSelectorProps : undefined
+														! hidePlanSelector
+															? { ...planTypeSelectorProps, plans: gridPlansForPlanTypeSelector }
+															: undefined
 													}
 													coupon={ coupon }
 													recordTracksEvent={ recordTracksEvent }
