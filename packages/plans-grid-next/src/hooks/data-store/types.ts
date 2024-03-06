@@ -1,6 +1,5 @@
 import { FeatureList, PlanSlug, TERMS_LIST } from '@automattic/calypso-products';
-import { AddOnMeta } from '@automattic/data-stores';
-import { UseCheckPlanAvailabilityForPurchase } from '@automattic/data-stores/src/plans';
+import { AddOnMeta, Plans } from '@automattic/data-stores';
 import { HiddenPlans, PlansIntent } from '../../types';
 import { UseFreeTrialPlanSlugs } from './use-grid-plans';
 
@@ -18,6 +17,6 @@ export interface UseGridPlans {
 	siteId?: number | null;
 	storageAddOns: ( AddOnMeta | null )[];
 	term?: ( typeof TERMS_LIST )[ number ];
-	useCheckPlanAvailabilityForPurchase: UseCheckPlanAvailabilityForPurchase;
+	useCheckPlanAvailabilityForPurchase: Plans.UseCheckPlanAvailabilityForPurchase;
 	useFreeTrialPlanSlugs?: UseFreeTrialPlanSlugs;
 }
