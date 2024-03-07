@@ -1,11 +1,11 @@
 import { localizeUrl } from '@automattic/i18n-utils';
+import { HTTPS_SSL } from '@automattic/urls';
 import { localize } from 'i18n-calypso';
 import { isEmpty, merge, reduce } from 'lodash';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { getDomainRegistrations, getDomainTransfers } from 'calypso/lib/cart-values/cart-items';
 import { getTld, isHstsRequired } from 'calypso/lib/domains';
-import { HTTPS_SSL } from 'calypso/lib/url/support';
 import CheckoutTermsItem from 'calypso/my-sites/checkout/src/components/checkout-terms-item';
 import { getProductsList } from 'calypso/state/products-list/selectors';
 
