@@ -10,13 +10,11 @@ import {
 	TYPE_WOOEXPRESS_SMALL,
 	getPlan,
 	isBloggerPlan,
-	TERMS_LIST,
 	applyTestFiltersToPlansList,
 	isMonthly,
 	isWpcomEnterpriseGridPlan,
 	TERM_MONTHLY,
 	isWpComFreePlan,
-	type FeatureList,
 	type PlanSlug,
 	type PlanType,
 	isBusinessPlan,
@@ -26,8 +24,9 @@ import {
 	isFreePlan,
 	isPersonalPlan,
 } from '@automattic/calypso-products';
-import { Plans, type AddOnMeta } from '@automattic/data-stores';
+import { Plans } from '@automattic/data-stores';
 import { isSamePlan } from '../../lib/is-same-plan';
+import { UseGridPlansParams } from './types';
 import useHighlightLabels from './use-highlight-labels';
 import usePlansFromTypes from './use-plans-from-types';
 import type { GridPlan, HiddenPlans, PlansIntent } from '../../types';
@@ -42,29 +41,6 @@ export type UseFreeTrialPlanSlugs = ( {
 } ) => {
 	[ Type in PlanType ]?: PlanSlug;
 };
-
-interface Props {
-	// allFeaturesList temporary until feature definitions are ported to calypso-products package
-	allFeaturesList: FeatureList;
-	useCheckPlanAvailabilityForPurchase: Plans.UseCheckPlanAvailabilityForPurchase;
-	useFreeTrialPlanSlugs?: UseFreeTrialPlanSlugs;
-	eligibleForFreeHostingTrial?: boolean;
-	storageAddOns: ( AddOnMeta | null )[] | null;
-	selectedFeature?: string | null;
-	term?: ( typeof TERMS_LIST )[ number ]; // defaults to monthly
-	intent?: PlansIntent;
-	selectedPlan?: PlanSlug;
-	hiddenPlans?: HiddenPlans;
-	isInSignup?: boolean;
-	showLegacyStorageFeature?: boolean;
-	isDisplayingPlansNeededForFeature?: boolean;
-	/**
-	 * If the subdomain generation is unsuccessful we do not show the free plan
-	 */
-	isSubdomainNotGenerated?: boolean;
-	coupon?: string;
-	siteId?: number | null;
-}
 
 const isGridPlanVisible = ( {
 	hiddenPlans: {
@@ -122,7 +98,7 @@ const usePlanTypesWithIntent = ( {
 	hiddenPlans: { hideEnterprisePlan } = {},
 	isSubdomainNotGenerated = false,
 }: Pick<
-	Props,
+	UseGridPlansParams,
 	'intent' | 'selectedPlan' | 'siteId' | 'hiddenPlans' | 'isSubdomainNotGenerated'
 > ): string[] => {
 	const { planSlug: sitePlanSlug } = Plans.useCurrentPlan( { siteId } ) || {};
@@ -232,7 +208,7 @@ const useGridPlans = ( {
 	coupon,
 	siteId,
 	isDisplayingPlansNeededForFeature,
-}: Props ): Omit< GridPlan, 'features' >[] | null => {
+}: UseGridPlansParams ): Omit< GridPlan, 'features' >[] | null => {
 	const freeTrialPlanSlugs = useFreeTrialPlanSlugs?.( {
 		intent: intent ?? 'default',
 		eligibleForFreeHostingTrial,

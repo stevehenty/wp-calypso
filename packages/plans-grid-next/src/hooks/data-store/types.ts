@@ -3,13 +3,14 @@ import { AddOnMeta, Plans } from '@automattic/data-stores';
 import { HiddenPlans, PlansIntent } from '../../types';
 import { UseFreeTrialPlanSlugs } from './use-grid-plans';
 
-export interface UseGridPlans {
+export interface UseGridPlansParams {
 	allFeaturesList: FeatureList;
 	coupon?: string;
 	eligibleForFreeHostingTrial?: boolean;
 	hiddenPlans?: HiddenPlans;
 	intent?: PlansIntent;
 	isDisplayingPlansNeededForFeature?: boolean;
+	isInSignup?: boolean;
 	isSubdomainNotGenerated?: boolean;
 	selectedFeature?: string | null;
 	selectedPlan?: PlanSlug;

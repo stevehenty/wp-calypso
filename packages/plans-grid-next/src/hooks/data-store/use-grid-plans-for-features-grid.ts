@@ -1,8 +1,8 @@
 import { useMemo } from '@wordpress/element';
-import type { GridPlan } from '../../types';
-import { type UseGridPlans } from './types';
+import { type UseGridPlansParams } from './types';
 import useGridPlans from './use-grid-plans';
 import usePlanFeaturesForGridPlans from './use-plan-features-for-grid-plans';
+import type { GridPlan } from '../../types';
 
 const useGridPlansForFeaturesGrid = ( {
 	allFeaturesList,
@@ -21,7 +21,7 @@ const useGridPlansForFeaturesGrid = ( {
 	term,
 	useCheckPlanAvailabilityForPurchase,
 	useFreeTrialPlanSlugs,
-}: UseGridPlans & { isInSignup: boolean } ): GridPlan[] | null => {
+}: UseGridPlansParams ): GridPlan[] | null => {
 	const gridPlans = useGridPlans( {
 		allFeaturesList,
 		coupon,

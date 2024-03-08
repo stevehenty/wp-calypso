@@ -3,10 +3,10 @@ import {
 	PLAN_HOSTING_TRIAL_MONTHLY,
 } from '@automattic/calypso-products';
 import { useMemo } from '@wordpress/element';
-import type { GridPlan } from '../../types';
-import { type UseGridPlans } from './types';
+import { type UseGridPlansParams } from './types';
 import useGridPlans from './use-grid-plans';
 import useRestructuredPlanFeaturesForComparisonGrid from './use-restructured-plan-features-for-comparison-grid';
+import type { GridPlan } from '../../types';
 
 const HIDDEN_PLANS = [ PLAN_HOSTING_TRIAL_MONTHLY, PLAN_ENTERPRISE_GRID_WPCOM ];
 
@@ -26,7 +26,7 @@ const useGridPlansForComparisonGrid = ( {
 	term,
 	useCheckPlanAvailabilityForPurchase,
 	useFreeTrialPlanSlugs,
-}: UseGridPlans ): GridPlan[] | null => {
+}: UseGridPlansParams ): GridPlan[] | null => {
 	const gridPlans = useGridPlans( {
 		allFeaturesList,
 		coupon,
