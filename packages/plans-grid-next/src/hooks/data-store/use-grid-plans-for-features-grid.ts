@@ -1,5 +1,5 @@
 import { useMemo } from '@wordpress/element';
-import { GridPlan } from '../../types';
+import type { GridPlan } from '../../types';
 import { type UseGridPlans } from './types';
 import useGridPlans from './use-grid-plans';
 import usePlanFeaturesForGridPlans from './use-plan-features-for-grid-plans';
