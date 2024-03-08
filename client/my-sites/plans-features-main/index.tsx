@@ -553,7 +553,6 @@ const PlansFeaturesMain = ( {
 		filteredDisplayedIntervals,
 		showPlanTypeSelectorDropdown,
 		planTypeSelector,
-		gridPlansForFeaturesGrid,
 		sitePlanSlug,
 		coupon,
 		siteId,
