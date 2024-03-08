@@ -821,32 +821,32 @@ const PlansFeaturesMain = ( {
 							<div className="plans-wrapper">
 								{ gridPlansForFeaturesGrid && (
 									<FeaturesGrid
-										gridPlans={ gridPlansForFeaturesGrid }
-										gridPlanForSpotlight={ gridPlanForSpotlight }
-										paidDomainName={ paidDomainName }
-										generatedWPComSubdomain={ resolvedSubdomainName }
-										isCustomDomainAllowedOnFreePlan={ isCustomDomainAllowedOnFreePlan }
-										isInSignup={ isInSignup }
-										isInAdmin={ ! isInSignup }
-										isLaunchPage={ isLaunchPage }
-										onUpgradeClick={ handleUpgradeClick }
-										selectedFeature={ selectedFeature }
-										siteId={ siteId }
-										intervalType={ intervalType }
-										hideUnavailableFeatures={ hideUnavailableFeatures }
+										allFeaturesList={ FEATURES_LIST }
+										coupon={ coupon }
 										currentSitePlanSlug={ sitePlanSlug }
-										planActionOverrides={ planActionOverrides }
+										generatedWPComSubdomain={ resolvedSubdomainName }
+										gridPlanForSpotlight={ gridPlanForSpotlight }
+										gridPlans={ gridPlansForFeaturesGrid }
+										hideUnavailableFeatures={ hideUnavailableFeatures }
 										intent={ intent }
+										intervalType={ intervalType }
+										isCustomDomainAllowedOnFreePlan={ isCustomDomainAllowedOnFreePlan }
+										isInAdmin={ ! isInSignup }
+										isInSignup={ isInSignup }
+										isLaunchPage={ isLaunchPage }
+										onStorageAddOnClick={ handleStorageAddOnClick }
+										onUpgradeClick={ handleUpgradeClick }
+										paidDomainName={ paidDomainName }
+										planActionOverrides={ planActionOverrides }
+										planUpgradeCreditsApplicable={ planUpgradeCreditsApplicable }
+										recordTracksEvent={ recordTracksEvent }
+										selectedFeature={ selectedFeature }
 										showLegacyStorageFeature={ showLegacyStorageFeature }
+										showRefundPeriod={ isAnyHostingFlow( flowName ) }
 										showUpgradeableStorage={ showUpgradeableStorage }
+										siteId={ siteId }
 										stickyRowOffset={ masterbarHeight }
 										useCheckPlanAvailabilityForPurchase={ useCheckPlanAvailabilityForPurchase }
-										allFeaturesList={ FEATURES_LIST }
-										onStorageAddOnClick={ handleStorageAddOnClick }
-										showRefundPeriod={ isAnyHostingFlow( flowName ) }
-										recordTracksEvent={ recordTracksEvent }
-										coupon={ coupon }
-										planUpgradeCreditsApplicable={ planUpgradeCreditsApplicable }
 									/>
 								) }
 								{ showEscapeHatch && hidePlansFeatureComparison && (
@@ -892,35 +892,35 @@ const PlansFeaturesMain = ( {
 												) }
 											{ gridPlansForComparisonGrid && gridPlansForPlanTypeSelector && (
 												<ComparisonGrid
-													gridPlans={ gridPlansForComparisonGrid }
-													isInSignup={ isInSignup }
-													isInAdmin={ ! isInSignup }
-													isLaunchPage={ isLaunchPage }
-													onUpgradeClick={ handleUpgradeClick }
-													selectedFeature={ selectedFeature }
-													selectedPlan={ selectedPlan }
-													siteId={ siteId }
-													intervalType={ intervalType }
-													hideUnavailableFeatures={ hideUnavailableFeatures }
-													currentSitePlanSlug={ sitePlanSlug }
-													planActionOverrides={ planActionOverrides }
-													intent={ intent }
-													showUpgradeableStorage={ showUpgradeableStorage }
-													stickyRowOffset={ comparisonGridStickyRowOffset }
-													useCheckPlanAvailabilityForPurchase={
-														useCheckPlanAvailabilityForPurchase
-													}
 													allFeaturesList={ FEATURES_LIST }
+													coupon={ coupon }
+													currentSitePlanSlug={ sitePlanSlug }
+													gridPlans={ gridPlansForComparisonGrid }
+													hideUnavailableFeatures={ hideUnavailableFeatures }
+													intent={ intent }
+													intervalType={ intervalType }
+													isInAdmin={ ! isInSignup }
+													isInSignup={ isInSignup }
+													isLaunchPage={ isLaunchPage }
 													onStorageAddOnClick={ handleStorageAddOnClick }
-													showRefundPeriod={ isAnyHostingFlow( flowName ) }
+													onUpgradeClick={ handleUpgradeClick }
+													planActionOverrides={ planActionOverrides }
 													planTypeSelectorProps={
 														! hidePlanSelector
 															? { ...planTypeSelectorProps, plans: gridPlansForPlanTypeSelector }
 															: undefined
 													}
-													coupon={ coupon }
-													recordTracksEvent={ recordTracksEvent }
 													planUpgradeCreditsApplicable={ planUpgradeCreditsApplicable }
+													recordTracksEvent={ recordTracksEvent }
+													selectedFeature={ selectedFeature }
+													selectedPlan={ selectedPlan }
+													showRefundPeriod={ isAnyHostingFlow( flowName ) }
+													showUpgradeableStorage={ showUpgradeableStorage }
+													siteId={ siteId }
+													stickyRowOffset={ comparisonGridStickyRowOffset }
+													useCheckPlanAvailabilityForPurchase={
+														useCheckPlanAvailabilityForPurchase
+													}
 												/>
 											) }
 											<ComparisonGridToggle
