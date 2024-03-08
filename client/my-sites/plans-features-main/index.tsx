@@ -87,7 +87,6 @@ import type {
 } from '@automattic/plans-grid-next';
 import type { MinimalRequestCartProduct } from '@automattic/shopping-cart';
 import type { IAppState } from 'calypso/state/types';
-
 import './style.scss';
 
 const FreePlanSubHeader = styled.p`
@@ -636,7 +635,7 @@ const PlansFeaturesMain = ( {
 		intent,
 		isSpotlightOnCurrentPlan,
 		gridPlans: gridPlansForFeaturesGrid,
-		sitePlanSlug,
+		siteId,
 	} );
 
 	const [ masterbarHeight, setMasterbarHeight ] = useState( 0 );
