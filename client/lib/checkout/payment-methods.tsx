@@ -15,7 +15,7 @@ export const PARTNER_RAZORPAY = 'razorpay';
 export const PAYMENT_AGREEMENTS_PARTNERS = [ PARTNER_PAYPAL_EXPRESS, PARTNER_RAZORPAY ];
 
 /**
- * A saved payment method (card, PayPal agreement, or Razorpay eMandate).
+ * A saved payment method (card, PayPal agreement, or Razorpay emandate).
  *
  * Used by the `/me/payment-methods` endpoint after version 1.1.
  */
@@ -140,7 +140,7 @@ export const PaymentMethodSummary = ( {
 		return <>{ email || '' }</>;
 	}
 	if ( type === PARTNER_RAZORPAY ) {
-		return <>{ email || translate( 'Razorpay' ) }</>;
+		return <>{ translate( 'Razorpay' ) }</>;
 	}
 	let displayType: TranslateResult;
 	switch ( type && type.toLocaleLowerCase() ) {
