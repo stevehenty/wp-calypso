@@ -1,12 +1,12 @@
 import {
-	FEATURE_GROUP_ESSENTIAL_FEATURES,
-	FEATURE_GROUP_PAYMENT_TRANSACTION_FEES,
 	getPlanClass,
+	isWooExpressPlan,
+	FEATURE_GROUP_ESSENTIAL_FEATURES,
 	getPlanFeaturesGrouped,
+	getWooExpressFeaturesGrouped,
+	FEATURE_GROUP_PAYMENT_TRANSACTION_FEES,
 	getPlans,
 	PLAN_WOOEXPRESS_MEDIUM_MONTHLY,
-	getWooExpressFeaturesGrouped,
-	isWooExpressPlan,
 } from '@automattic/calypso-products';
 import { Gridicon, JetpackLogo } from '@automattic/components';
 import { css } from '@emotion/react';
@@ -15,13 +15,13 @@ import { useMemo } from '@wordpress/element';
 import classNames from 'classnames';
 import { useTranslate } from 'i18n-calypso';
 import {
+	useState,
+	useCallback,
+	useEffect,
 	ChangeEvent,
 	Dispatch,
 	SetStateAction,
 	forwardRef,
-	useCallback,
-	useEffect,
-	useState,
 } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { plansGridMediumLarge } from '../../css-mixins';
@@ -42,21 +42,20 @@ import PopularBadge from '../popular-badge';
 import BillingTimeframe from '../shared/billing-timeframe';
 import { StickyContainer } from '../sticky-container';
 import StorageAddOnDropdown from '../storage-add-on-dropdown';
-import useVisibleGridPlans from './hooks/useVisibleGridPlans';
 import type {
-	ComparisonGridProps,
 	GridPlan,
+	ComparisonGridProps,
 	PlanActionOverrides,
-	PlanTypeSelectorProps,
 	TransformedFeatureObject,
+	PlanTypeSelectorProps,
 } from '../../types';
 import type {
+	FeatureObject,
 	Feature,
 	FeatureGroup,
-	FeatureGroupMap,
-	FeatureObject,
 	PlanSlug,
 	WPComStorageAddOnSlug,
+	FeatureGroupMap,
 } from '@automattic/calypso-products';
 
 function DropdownIcon() {
@@ -348,7 +347,7 @@ type ComparisonGridHeaderProps = {
 	isInSignup: boolean;
 	isLaunchPage?: boolean | null;
 	isFooter?: boolean;
-	setVisibleGridPlans: ( visibleGridPlans: GridPlan[] ) => void;
+	onPlanChange: ( currentPlan: PlanSlug, event: ChangeEvent< HTMLSelectElement > ) => void;
 	currentSitePlanSlug?: string | null;
 	onUpgradeClick: ( planSlug: PlanSlug ) => void;
 	planActionOverrides?: PlanActionOverrides;
@@ -378,7 +377,7 @@ const ComparisonGridHeaderCell = ( {
 	isFooter,
 	isInSignup,
 	visibleGridPlans,
-	setVisibleGridPlans,
+	onPlanChange,
 	displayedGridPlans,
 	currentSitePlanSlug,
 	isLaunchPage,
@@ -424,13 +423,9 @@ const ComparisonGridHeaderCell = ( {
 			<PlanSelector>
 				{ showPlanSelect && (
 					<select
-						onChange={ ( { target }: ChangeEvent< HTMLSelectElement > ) => {
-							const newPlan = target.value as PlanSlug;
-							const visiblePlans = visibleGridPlans.map( ( gridPlan ) =>
-								planSlug === gridPlan.planSlug ? gridPlansIndex[ newPlan ] : gridPlan
-							);
-							setVisibleGridPlans( visiblePlans );
-						} }
+						onChange={ ( event: ChangeEvent< HTMLSelectElement > ) =>
+							onPlanChange( planSlug, event )
+						}
 						className="plan-comparison-grid__title-select"
 						value={ planSlug }
 					>
@@ -496,7 +491,7 @@ const ComparisonGridHeader = forwardRef< HTMLDivElement, ComparisonGridHeaderPro
 			isInSignup,
 			isLaunchPage,
 			isFooter,
-			setVisibleGridPlans,
+			onPlanChange,
 			currentSitePlanSlug,
 			onUpgradeClick,
 			planActionOverrides,
@@ -541,7 +536,7 @@ const ComparisonGridHeader = forwardRef< HTMLDivElement, ComparisonGridHeaderPro
 						allVisible={ allVisible }
 						isInSignup={ isInSignup }
 						visibleGridPlans={ visibleGridPlans }
-						setVisibleGridPlans={ setVisibleGridPlans }
+						onPlanChange={ onPlanChange }
 						displayedGridPlans={ displayedGridPlans }
 						currentSitePlanSlug={ currentSitePlanSlug }
 						onUpgradeClick={ onUpgradeClick }
@@ -1001,15 +996,15 @@ const ComparisonGrid = ( {
 		? getWooExpressFeaturesGrouped()
 		: getPlanFeaturesGrouped();
 
-	const { visibleGridPlans, setVisibleGridPlans } = useVisibleGridPlans();
+	const [ visiblePlans, setVisiblePlans ] = useState< PlanSlug[] >( [] );
 
 	const displayedGridPlans = useMemo( () => {
 		return sortPlans( gridPlans, currentSitePlanSlug, 'small' === gridSize );
 	}, [ gridPlans, currentSitePlanSlug, gridSize ] );
 
 	useEffect( () => {
-		let newVisiblePlans = visibleGridPlans;
-		let visibleLength = displayedGridPlans.length;
+		let newVisiblePlans = displayedGridPlans.map( ( { planSlug } ) => planSlug );
+		let visibleLength = newVisiblePlans.length;
 
 		switch ( gridSize ) {
 			case 'large':
@@ -1025,10 +1020,39 @@ const ComparisonGrid = ( {
 		}
 
 		if ( newVisiblePlans.length !== visibleLength ) {
-			newVisiblePlans = displayedGridPlans.slice( 0, visibleLength );
-			setVisibleGridPlans( newVisiblePlans );
+			newVisiblePlans = newVisiblePlans.slice( 0, visibleLength );
 		}
-	}, [ gridSize, displayedGridPlans, isInSignup, visibleGridPlans, setVisibleGridPlans ] );
+
+		setVisiblePlans( newVisiblePlans );
+	}, [ gridSize, displayedGridPlans, isInSignup ] );
+
+	const visibleGridPlans = useMemo(
+		() =>
+			visiblePlans.reduce( ( acc, planSlug ) => {
+				const gridPlan = displayedGridPlans.find(
+					( gridPlan ) => getPlanClass( gridPlan.planSlug ) === getPlanClass( planSlug )
+				);
+
+				if ( gridPlan ) {
+					acc.push( gridPlan );
+				}
+
+				return acc;
+			}, [] as GridPlan[] ),
+		[ visiblePlans, displayedGridPlans ]
+	);
+
+	const onPlanChange = useCallback(
+		( currentPlan: PlanSlug, event: ChangeEvent< HTMLSelectElement > ) => {
+			const newPlan = event.currentTarget.value;
+			const newVisiblePlans = visiblePlans.map( ( plan ) =>
+				plan === currentPlan ? ( newPlan as PlanSlug ) : plan
+			);
+
+			setVisiblePlans( newVisiblePlans );
+		},
+		[ visiblePlans ]
+	);
 
 	const planFeatureFootnotes = useMemo( () => {
 		// This is the main list of all footnotes. It is displayed at the bottom of the comparison grid.
@@ -1083,7 +1107,7 @@ const ComparisonGrid = ( {
 
 	return (
 		<div className={ classes }>
-			<Grid visiblePlans={ visibleGridPlans.length }>
+			<Grid visiblePlans={ visiblePlans.length }>
 				<StickyContainer
 					disabled={ isBottomHeaderInView }
 					stickyClass="is-sticky-header-row"
@@ -1096,7 +1120,7 @@ const ComparisonGrid = ( {
 							visibleGridPlans={ visibleGridPlans }
 							isInSignup={ isInSignup }
 							isLaunchPage={ isLaunchPage }
-							setVisibleGridPlans={ setVisibleGridPlans }
+							onPlanChange={ onPlanChange }
 							currentSitePlanSlug={ currentSitePlanSlug }
 							onUpgradeClick={ handleUpgradeClick }
 							planActionOverrides={ planActionOverrides }
@@ -1129,7 +1153,7 @@ const ComparisonGrid = ( {
 					isInSignup={ isInSignup }
 					isLaunchPage={ isLaunchPage }
 					isFooter={ true }
-					setVisibleGridPlans={ setVisibleGridPlans }
+					onPlanChange={ onPlanChange }
 					currentSitePlanSlug={ currentSitePlanSlug }
 					onUpgradeClick={ handleUpgradeClick }
 					planActionOverrides={ planActionOverrides }
