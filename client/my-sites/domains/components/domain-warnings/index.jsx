@@ -925,7 +925,7 @@ export class DomainWarnings extends PureComponent {
 							strong: <strong />,
 							a: (
 								<a
-									href={ INCOMING_DOMAIN_TRANSFER_STATUSES_IN_PROGRESS }
+									href={ localizeUrl( INCOMING_DOMAIN_TRANSFER_STATUSES_IN_PROGRESS ) }
 									rel="noopener noreferrer"
 									target="_blank"
 								/>
@@ -947,7 +947,7 @@ export class DomainWarnings extends PureComponent {
 								strong: <strong />,
 								a: (
 									<a
-										href={ INCOMING_DOMAIN_TRANSFER_STATUSES_IN_PROGRESS }
+										href={ localizeUrl( INCOMING_DOMAIN_TRANSFER_STATUSES_IN_PROGRESS ) }
 										rel="noopener noreferrer"
 										target="_blank"
 									/>
@@ -970,7 +970,7 @@ export class DomainWarnings extends PureComponent {
 							strong: <strong />,
 							a: (
 								<a
-									href={ INCOMING_DOMAIN_TRANSFER_STATUSES_IN_PROGRESS }
+									href={ localizeUrl( INCOMING_DOMAIN_TRANSFER_STATUSES_IN_PROGRESS ) }
 									rel="noopener noreferrer"
 									target="_blank"
 								/>
