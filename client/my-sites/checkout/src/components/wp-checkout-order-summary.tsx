@@ -249,7 +249,16 @@ function CheckoutSummaryPriceList() {
 				</CheckoutSubtotalSection>
 
 				<CheckoutSummaryTotal shouldUseCheckoutV2={ shouldUseCheckoutV2 }>
-					<span className="wp-checkout-order-summary__label">{ translate( 'Total' ) }</span>
+					<span className="wp-checkout-order-summary__label">
+						{ responseCart.tax.location.country_code
+							? translate( 'Total', {
+									context: 'The label of the total line item in checkout',
+									textOnly: true,
+							  } )
+							: translate( 'Estimated total', {
+									textOnly: true,
+							  } ) }
+					</span>
 					<span className="wp-checkout-order-summary__total-price">
 						{ totalLineItem.formattedAmount }
 					</span>
