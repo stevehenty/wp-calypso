@@ -879,6 +879,7 @@ __metadata:
     "@automattic/i18n-utils": "workspace:^"
     "@automattic/search": "workspace:^"
     "@automattic/typography": "workspace:^"
+    "@automattic/urls": "workspace:^"
     "@automattic/viewport": "workspace:^"
     "@tanstack/react-query": "npm:^5.15.5"
     "@testing-library/jest-dom": "npm:^6.4.2"
