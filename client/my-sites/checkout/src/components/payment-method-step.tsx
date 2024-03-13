@@ -15,6 +15,7 @@ import { useTranslate } from 'i18n-calypso';
 import useCartKey from 'calypso/my-sites/checkout/use-cart-key';
 import CheckoutTerms from '../components/checkout-terms';
 import { useCheckoutV2 } from '../hooks/use-checkout-v2';
+import { TaxNotCalculatedLineItem } from './wp-checkout-order-summary';
 import { WPOrderReviewSection } from './wp-order-review-line-items';
 
 const CheckoutTermsWrapper = styled.div`
@@ -118,6 +119,9 @@ export default function BeforeSubmitCheckoutHeader() {
 						<NonProductLineItem subtotal lineItem={ subTotalLineItemWithoutCoupon } />
 						{ costOverridesList.length > 0 && (
 							<NonProductLineItem subtotal lineItem={ discountLineItem } />
+						) }
+						{ taxLineItems.length === 0 && ! responseCart.tax.location.country_code && (
+							<TaxNotCalculatedLineItem />
 						) }
 						{ taxLineItems.map( ( taxLineItem ) => (
 							<NonProductLineItem key={ taxLineItem.id } tax lineItem={ taxLineItem } />

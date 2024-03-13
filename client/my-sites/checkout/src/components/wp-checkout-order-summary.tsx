@@ -172,6 +172,22 @@ export function CheckoutSummaryFeaturedList( {
 		</>
 	);
 }
+
+const TaxNotCalculatedLineItemWrapper = styled.div`
+	font-size: 12px;
+`;
+
+export function TaxNotCalculatedLineItem() {
+	const translate = useTranslate();
+	return (
+		<TaxNotCalculatedLineItemWrapper>
+			{ translate( 'Taxes are calculated after billing information is provided', {
+				textOnly: true,
+			} ) }
+		</TaxNotCalculatedLineItemWrapper>
+	);
+}
+
 function CheckoutSummaryPriceList() {
 	const cartKey = useCartKey();
 	const { responseCart } = useShoppingCart( cartKey );
@@ -215,6 +231,9 @@ function CheckoutSummaryPriceList() {
 							} ) }
 						</span>
 					</CheckoutSummaryLineItem>
+					{ taxLineItems.length === 0 && ! responseCart.tax.location.country_code && (
+						<TaxNotCalculatedLineItem />
+					) }
 					{ taxLineItems.map( ( taxLineItem ) => (
 						<CheckoutSummaryLineItem key={ 'checkout-summary-line-item-' + taxLineItem.id }>
 							<span>{ taxLineItem.label }</span>
