@@ -69,7 +69,7 @@ const NonTotalPrices = styled.div`
 `;
 const TotalPrice = styled.div`
 	font-size: 14px;
-	padding: 16px 0;
+	padding-top: 16px;
 `;
 
 export default function BeforeSubmitCheckoutHeader() {
@@ -92,12 +92,6 @@ export default function BeforeSubmitCheckoutHeader() {
 	};
 
 	const totalLineItem = getTotalLineItemFromCart( responseCart );
-	if ( isBillingInfoEmpty( responseCart ) ) {
-		totalLineItem.label = translate( 'Estimated total', {
-			textOnly: true,
-		} );
-	}
-
 	const subtotalBeforeDiscounts = getSubtotalWithoutDiscounts( responseCart );
 	const subTotalLineItemWithoutCoupon: LineItemType = {
 		id: 'subtotal-without-coupon',
@@ -127,9 +121,6 @@ export default function BeforeSubmitCheckoutHeader() {
 						{ costOverridesList.length > 0 && (
 							<NonProductLineItem subtotal lineItem={ discountLineItem } />
 						) }
-						{ taxLineItems.length === 0 && isBillingInfoEmpty( responseCart ) && (
-							<TaxNotCalculatedLineItem />
-						) }
 						{ taxLineItems.map( ( taxLineItem ) => (
 							<NonProductLineItem key={ taxLineItem.id } tax lineItem={ taxLineItem } />
 						) ) }
@@ -140,6 +131,7 @@ export default function BeforeSubmitCheckoutHeader() {
 					<TotalPrice>
 						<NonProductLineItem total lineItem={ totalLineItem } />
 					</TotalPrice>
+					{ isBillingInfoEmpty( responseCart ) && <TaxNotCalculatedLineItem /> }
 				</WPOrderReviewSection>
 			) }
 		</>

@@ -175,6 +175,7 @@ export function CheckoutSummaryFeaturedList( {
 }
 
 const TaxNotCalculatedLineItemWrapper = styled.div`
+	margin-top: 8px;
 	font-size: 12px;
 	text-wrap: pretty;
 `;
@@ -213,12 +214,6 @@ function CheckoutSummaryPriceList() {
 	const translate = useTranslate();
 	const costOverridesList = filterAndGroupCostOverridesForDisplay( responseCart, translate );
 
-	if ( isBillingInfoEmpty( responseCart ) ) {
-		totalLineItem.label = translate( 'Estimated total', {
-			textOnly: true,
-		} );
-	}
-
 	const subtotalBeforeDiscounts = getSubtotalWithoutDiscounts( responseCart );
 	const shouldUseCheckoutV2 = useCheckoutV2() === 'treatment';
 
@@ -253,9 +248,6 @@ function CheckoutSummaryPriceList() {
 							} ) }
 						</span>
 					</CheckoutSummaryLineItem>
-					{ taxLineItems.length === 0 && isBillingInfoEmpty( responseCart ) && (
-						<TaxNotCalculatedLineItem />
-					) }
 					{ taxLineItems.map( ( taxLineItem ) => (
 						<CheckoutSummaryLineItem key={ 'checkout-summary-line-item-' + taxLineItem.id }>
 							<span>{ taxLineItem.label }</span>
@@ -272,19 +264,16 @@ function CheckoutSummaryPriceList() {
 
 				<CheckoutSummaryTotal shouldUseCheckoutV2={ shouldUseCheckoutV2 }>
 					<span className="wp-checkout-order-summary__label">
-						{ ! isBillingInfoEmpty( responseCart )
-							? translate( 'Total', {
-									context: 'The label of the total line item in checkout',
-									textOnly: true,
-							  } )
-							: translate( 'Estimated total', {
-									textOnly: true,
-							  } ) }
+						{ translate( 'Total', {
+							context: 'The label of the total line item in checkout',
+							textOnly: true,
+						} ) }
 					</span>
 					<span className="wp-checkout-order-summary__total-price">
 						{ totalLineItem.formattedAmount }
 					</span>
 				</CheckoutSummaryTotal>
+				{ isBillingInfoEmpty( responseCart ) && <TaxNotCalculatedLineItem /> }
 			</CheckoutSummaryAmountWrapper>
 		</>
 	);
@@ -1030,7 +1019,7 @@ const CheckoutSummaryTotal = styled( CheckoutSummaryLineItem )< { shouldUseCheck
 	color: ${ ( props ) => props.theme.colors.textColorDark };
 	font-weight: ${ ( props ) => props.theme.weights.bold };
 	line-height: 26px;
-	${ ( props ) => ( props.shouldUseCheckoutV2 ? `margin-bottom: 0px;` : `margin-bottom: 16px;` ) }
+	margin-bottom: 0px;
 	font-size: 20px;
 
 	& span {
