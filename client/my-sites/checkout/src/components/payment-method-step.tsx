@@ -9,13 +9,14 @@ import {
 	getSubtotalWithoutDiscounts,
 	getTotalDiscountsWithoutCredits,
 	filterAndGroupCostOverridesForDisplay,
+	isBillingInfoEmpty,
 } from '@automattic/wpcom-checkout';
 import styled from '@emotion/styled';
 import { useTranslate } from 'i18n-calypso';
 import useCartKey from 'calypso/my-sites/checkout/use-cart-key';
 import CheckoutTerms from '../components/checkout-terms';
 import { useCheckoutV2 } from '../hooks/use-checkout-v2';
-import { TaxNotCalculatedLineItem, isBillingInfoEmpty } from './wp-checkout-order-summary';
+import { TaxNotCalculatedLineItem } from './wp-checkout-order-summary';
 import { WPOrderReviewSection } from './wp-order-review-line-items';
 
 const CheckoutTermsWrapper = styled.div`

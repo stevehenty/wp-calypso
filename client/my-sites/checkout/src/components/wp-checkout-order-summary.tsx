@@ -33,6 +33,7 @@ import {
 } from '@automattic/onboarding';
 import { useShoppingCart } from '@automattic/shopping-cart';
 import {
+	isBillingInfoEmpty,
 	getTaxBreakdownLineItemsFromCart,
 	getTotalLineItemFromCart,
 	getSubtotalWithoutDiscounts,
@@ -52,7 +53,6 @@ import { useSelector } from 'calypso/state';
 import { getCurrentPlan } from 'calypso/state/sites/plans/selectors';
 import { useCheckoutV2 } from '../hooks/use-checkout-v2';
 import getAkismetProductFeatures from '../lib/get-akismet-product-features';
-import getContactDetailsType from '../lib/get-contact-details-type';
 import getFlowPlanFeatures from '../lib/get-flow-plan-features';
 import getJetpackProductFeatures from '../lib/get-jetpack-product-features';
 import getPlanFeatures from '../lib/get-plan-features';
@@ -189,20 +189,6 @@ export function TaxNotCalculatedLineItem() {
 			} ) }
 		</TaxNotCalculatedLineItemWrapper>
 	);
-}
-
-/**
- * True if the billing/contact info is not filled in on a shopping cart (and it
- * needs to be filled in).
- */
-export function isBillingInfoEmpty( responseCart: ResponseCart ): boolean {
-	if ( getContactDetailsType( responseCart ) === 'none' ) {
-		return false;
-	}
-	if ( responseCart.tax.location.country_code ) {
-		return false;
-	}
-	return true;
 }
 
 function CheckoutSummaryPriceList() {
