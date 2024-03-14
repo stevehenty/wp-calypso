@@ -183,7 +183,7 @@ export function TaxNotCalculatedLineItem() {
 	const translate = useTranslate();
 	return (
 		<TaxNotCalculatedLineItemWrapper>
-			{ translate( 'Taxes may be applied once billing information is provided', {
+			{ translate( 'Taxes may be added once billing information is provided', {
 				textOnly: true,
 			} ) }
 		</TaxNotCalculatedLineItemWrapper>
