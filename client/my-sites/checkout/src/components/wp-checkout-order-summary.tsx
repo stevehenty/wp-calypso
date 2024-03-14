@@ -52,6 +52,7 @@ import { useSelector } from 'calypso/state';
 import { getCurrentPlan } from 'calypso/state/sites/plans/selectors';
 import { useCheckoutV2 } from '../hooks/use-checkout-v2';
 import getAkismetProductFeatures from '../lib/get-akismet-product-features';
+import getContactDetailsType from '../lib/get-contact-details-type';
 import getFlowPlanFeatures from '../lib/get-flow-plan-features';
 import getJetpackProductFeatures from '../lib/get-jetpack-product-features';
 import getPlanFeatures from '../lib/get-plan-features';
@@ -188,6 +189,20 @@ export function TaxNotCalculatedLineItem() {
 	);
 }
 
+/**
+ * True if the billing/contact info is not filled in on a shopping cart (and it
+ * needs to be filled in).
+ */
+export function isBillingInfoEmpty( responseCart: ResponseCart ): boolean {
+	if ( getContactDetailsType( responseCart ) === 'none' ) {
+		return false;
+	}
+	if ( responseCart.tax.location.country_code ) {
+		return false;
+	}
+	return true;
+}
+
 function CheckoutSummaryPriceList() {
 	const cartKey = useCartKey();
 	const { responseCart } = useShoppingCart( cartKey );
@@ -196,6 +211,12 @@ function CheckoutSummaryPriceList() {
 	const totalLineItem = getTotalLineItemFromCart( responseCart );
 	const translate = useTranslate();
 	const costOverridesList = filterAndGroupCostOverridesForDisplay( responseCart, translate );
+
+	if ( isBillingInfoEmpty( responseCart ) ) {
+		totalLineItem.label = translate( 'Estimated total', {
+			textOnly: true,
+		} );
+	}
 
 	const subtotalBeforeDiscounts = getSubtotalWithoutDiscounts( responseCart );
 	const shouldUseCheckoutV2 = useCheckoutV2() === 'treatment';
@@ -231,7 +252,7 @@ function CheckoutSummaryPriceList() {
 							} ) }
 						</span>
 					</CheckoutSummaryLineItem>
-					{ taxLineItems.length === 0 && ! responseCart.tax.location.country_code && (
+					{ taxLineItems.length === 0 && isBillingInfoEmpty( responseCart ) && (
 						<TaxNotCalculatedLineItem />
 					) }
 					{ taxLineItems.map( ( taxLineItem ) => (
@@ -250,7 +271,7 @@ function CheckoutSummaryPriceList() {
 
 				<CheckoutSummaryTotal shouldUseCheckoutV2={ shouldUseCheckoutV2 }>
 					<span className="wp-checkout-order-summary__label">
-						{ responseCart.tax.location.country_code
+						{ ! isBillingInfoEmpty( responseCart )
 							? translate( 'Total', {
 									context: 'The label of the total line item in checkout',
 									textOnly: true,

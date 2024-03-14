@@ -15,7 +15,7 @@ import { useTranslate } from 'i18n-calypso';
 import useCartKey from 'calypso/my-sites/checkout/use-cart-key';
 import CheckoutTerms from '../components/checkout-terms';
 import { useCheckoutV2 } from '../hooks/use-checkout-v2';
-import { TaxNotCalculatedLineItem } from './wp-checkout-order-summary';
+import { TaxNotCalculatedLineItem, isBillingInfoEmpty } from './wp-checkout-order-summary';
 import { WPOrderReviewSection } from './wp-order-review-line-items';
 
 const CheckoutTermsWrapper = styled.div`
@@ -91,6 +91,13 @@ export default function BeforeSubmitCheckoutHeader() {
 		} ),
 	};
 
+	const totalLineItem = getTotalLineItemFromCart( responseCart );
+	if ( isBillingInfoEmpty( responseCart ) ) {
+		totalLineItem.label = translate( 'Estimated total', {
+			textOnly: true,
+		} );
+	}
+
 	const subtotalBeforeDiscounts = getSubtotalWithoutDiscounts( responseCart );
 	const subTotalLineItemWithoutCoupon: LineItemType = {
 		id: 'subtotal-without-coupon',
@@ -120,7 +127,7 @@ export default function BeforeSubmitCheckoutHeader() {
 						{ costOverridesList.length > 0 && (
 							<NonProductLineItem subtotal lineItem={ discountLineItem } />
 						) }
-						{ taxLineItems.length === 0 && ! responseCart.tax.location.country_code && (
+						{ taxLineItems.length === 0 && isBillingInfoEmpty( responseCart ) && (
 							<TaxNotCalculatedLineItem />
 						) }
 						{ taxLineItems.map( ( taxLineItem ) => (
@@ -131,7 +138,7 @@ export default function BeforeSubmitCheckoutHeader() {
 						) }
 					</NonTotalPrices>
 					<TotalPrice>
-						<NonProductLineItem total lineItem={ getTotalLineItemFromCart( responseCart ) } />
+						<NonProductLineItem total lineItem={ totalLineItem } />
 					</TotalPrice>
 				</WPOrderReviewSection>
 			) }

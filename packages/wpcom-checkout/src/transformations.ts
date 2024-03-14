@@ -18,18 +18,13 @@ import type {
 } from '@automattic/shopping-cart';
 
 export function getTotalLineItemFromCart( cart: ResponseCart ): LineItemType {
-	const isBillingInfoProvided = !! cart.tax.location.country_code;
 	return {
 		id: 'total',
 		type: 'total',
-		label: isBillingInfoProvided
-			? translate( 'Total', {
-					context: 'The label of the total line item in checkout',
-					textOnly: true,
-			  } )
-			: translate( 'Estimated total', {
-					textOnly: true,
-			  } ),
+		label: translate( 'Total', {
+			context: 'The label of the total line item in checkout',
+			textOnly: true,
+		} ),
 		formattedAmount: formatCurrency( cart.total_cost_integer, cart.currency, {
 			isSmallestUnit: true,
 			stripZeros: true,
