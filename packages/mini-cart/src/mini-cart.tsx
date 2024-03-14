@@ -92,6 +92,15 @@ function TaxNotCalculatedLineItem() {
 	);
 }
 
+function TaxAddedLineItem() {
+	const { __ } = useI18n();
+	return (
+		<TaxNotCalculatedLineItemWrapper>
+			{ __( 'Includes applicable taxes' ) }
+		</TaxNotCalculatedLineItemWrapper>
+	);
+}
+
 function MiniCartTotal( { responseCart }: { responseCart: ResponseCart } ) {
 	const { __ } = useI18n();
 	return (
@@ -188,6 +197,7 @@ export function MiniCart( {
 				{ ! shouldRenderEmptyCart && isBillingInfoEmpty( responseCart ) && (
 					<TaxNotCalculatedLineItem />
 				) }
+				{ ! shouldRenderEmptyCart && ! isBillingInfoEmpty( responseCart ) && <TaxAddedLineItem /> }
 				<MiniCartFooter className="mini-cart__footer">
 					{ ! shouldRenderEmptyCart && (
 						<Button
