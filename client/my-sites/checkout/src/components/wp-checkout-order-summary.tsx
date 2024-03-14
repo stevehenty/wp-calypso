@@ -176,6 +176,7 @@ export function CheckoutSummaryFeaturedList( {
 
 const TaxNotCalculatedLineItemWrapper = styled.div`
 	font-size: 12px;
+	text-wrap: pretty;
 `;
 
 export function TaxNotCalculatedLineItem() {
