@@ -29,6 +29,7 @@ import { checkIfJetpackSiteGotDisconnected } from 'calypso/state/jetpack-agency-
 import useProductsQuery from 'calypso/state/partner-portal/licenses/hooks/use-products-query';
 import { getIsPartnerOAuthTokenLoaded } from 'calypso/state/partner-portal/partner/selectors';
 import { A4A_SITES_DASHBOARD_DEFAULT_CATEGORY } from '../constants';
+import SiteNotifications from '../site-notifications';
 import SitesDashboardContext from '../sites-dashboard-context';
 
 import './style.scss';
@@ -188,6 +189,7 @@ export default function SitesDashboard() {
 					<LayoutNavigation { ...selectedItemProps }>
 						<NavigationTabs { ...selectedItemProps } items={ navItems } />
 					</LayoutNavigation>
+					<SiteNotifications />
 				</LayoutTop>
 
 				<DashboardDataContext.Provider
