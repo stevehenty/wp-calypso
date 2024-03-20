@@ -203,7 +203,11 @@ export const PatternLibrary = ( {
 						</ToggleGroupControl>
 					</div>
 
-					<PatternGallery patterns={ patterns } isGridView={ isGridView } />
+					<PatternGallery
+						isGridView={ isGridView }
+						patterns={ patterns }
+						patternTypeFilter={ patternTypeFilter }
+					/>
 				</PatternLibraryBody>
 			) }
 

@@ -50,6 +50,7 @@ export type CategoryGalleryFC = React.FC< CategoryGalleryProps >;
 type PatternGalleryProps = {
 	isGridView?: boolean;
 	patterns?: Pattern[];
+	patternTypeFilter: PatternTypeFilter;
 };
 
 export type PatternGalleryFC = React.FC< PatternGalleryProps >;
