@@ -1,14 +1,16 @@
-import { isEnabled } from '@automattic/calypso-config';
 import { Gridicon, WordPressLogo } from '@automattic/components';
 import { useTranslate } from 'i18n-calypso';
 import JetpackLogo from 'calypso/components/jetpack-logo';
 import PopoverMenuItem from 'calypso/components/popover-menu/item';
 import SplitButton from 'calypso/components/split-button';
+import {
+	A4A_MARKETPLACE_HOSTING_WPCOM_LINK,
+	A4A_SITES_CONNECT_URL_LINK,
+} from '../sidebar-menu/lib/constants';
 import type { MutableRefObject } from 'react';
 
-const WORDPRESS_CREATE_SITE_URL = 'https://cloud.jetpack.com/partner-portal/create-site';
-const JETPACK_CONNECT_URL = 'https://wordpress.com/jetpack/connect?source=jetpack-manage';
-const JETPACK_URL_ONLY_CONNECT_URL = 'https://cloud.jetpack.com/dashboard/connect-url';
+/** @todo Ensure the "a8c-for-agencies" source is supported. */
+const JETPACK_CONNECT_URL = 'https://wordpress.com/jetpack/connect?source=a8c-for-agencies';
 
 type Props = {
 	showMainButtonLabel?: boolean;
@@ -44,7 +46,8 @@ const AddNewSiteButton = ( {
 			onClick={ onClickAddNewSite }
 			href={ JETPACK_CONNECT_URL }
 		>
-			<PopoverMenuItem onClick={ onClickWpcomMenuItem } href={ WORDPRESS_CREATE_SITE_URL }>
+			{ /** @todo The A4A_MARKETPLACE_HOSTING_WPCOM_LINK URL does not exist yet.*/ }
+			<PopoverMenuItem onClick={ onClickWpcomMenuItem } href={ A4A_MARKETPLACE_HOSTING_WPCOM_LINK }>
 				<WordPressLogo className="gridicon" size={ 18 } />
 				<span>{ translate( 'Create a new WordPress.com site' ) }</span>
 			</PopoverMenuItem>
@@ -54,12 +57,11 @@ const AddNewSiteButton = ( {
 				<span>{ translate( 'Connect a site to Jetpack' ) }</span>
 			</PopoverMenuItem>
 
-			{ isEnabled( 'jetpack/url-only-connection' ) && (
-				<PopoverMenuItem onClick={ onClickUrlMenuItem } href={ JETPACK_URL_ONLY_CONNECT_URL }>
-					<Gridicon icon="domains" size={ 18 } />
-					<span>{ translate( 'Add sites by URL' ) }</span>
-				</PopoverMenuItem>
-			) }
+			{ /** @todo The A4A_SITES_CONNECT_URL_LINK URL does not exist yet. It will need to be migrated over from cloud.jetpack.com/dashboard/connect-url. */ }
+			<PopoverMenuItem onClick={ onClickUrlMenuItem } href={ A4A_SITES_CONNECT_URL_LINK }>
+				<Gridicon icon="domains" size={ 18 } />
+				<span>{ translate( 'Add sites by URL' ) }</span>
+			</PopoverMenuItem>
 		</SplitButton>
 	);
 };
